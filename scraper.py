@@ -67,3 +67,10 @@ def runScraper(startingURL='https://www.beeradvocate.com/lists/top/'):
     print(f'Collect {review_count} beer reviews')
     return None
 
+def scrapyBeerList(startingURL='https://www.beeradvocate.com/lists/top/'):
+    topBeersHTML = getHTMLText(startingURL)
+    topBeersList = createBeerList(topBeersHTML)[:2]
+    allReviewPages = createReviewPageList(topBeersList)
+
+    return allReviewPages
+
