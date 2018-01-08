@@ -19,7 +19,7 @@ class reviewData(Item):
 class ReviewscraperSpider(Spider):
     name = 'reviewScraper'
     allowed_domains = ['www.beeradvocate.com/beer/profile/']
-    start_urls = [url for url in BAReviewList]
+    start_urls = [url.reviewURL for url in BAReviewList]
 
     def parse(self, response):
         reviews = response.xpath('//*[@id="rating_fullview_content_2"]/text()[2]').extract()
