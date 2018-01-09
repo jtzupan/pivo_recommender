@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
+import os
 import sys
 from scrapy import Spider, Item, Field
-from scrapy.selector import Selector
-from scrapy.exceptions import CloseSpider
-from scrapy.http import Request
 import scrapy
 
-sys.path.insert(0, '/Users/johnzupan/mystuff/pivo_rec')
+scraperPath = os.path.normpath(os.getcwd() + os.sep + os.pardir+ os.sep + os.pardir)
+
+sys.path.insert(0, scraperPath)
 
 import scraper
 
