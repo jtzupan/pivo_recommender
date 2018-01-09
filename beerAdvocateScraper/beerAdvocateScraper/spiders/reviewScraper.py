@@ -13,20 +13,24 @@ import scraper
 BAReviewList = scraper.scrapyBeerList()
 
 class reviewData(Item):
-    beerName = Field()
+    beerID = Field()
     reviewText = Field()
 
 class ReviewscraperSpider(Spider):
     name = 'reviewScraper'
-    allowed_domains = ['www.beeradvocate.com/beer/profile/']
-    start_urls = [url.reviewURL for url in BAReviewList]
+    
+    def start_requests(self):
+
+        allowed_domains = ['www.beeradvocate.com/beer/profile/']
+        for beerID, url in BAReviewList:
+            yield scrapy.Request(url=url, callback=self.parse, meta={'beerID':beerID})
 
     def parse(self, response):
         reviews = response.xpath('//*[@id="rating_fullview_content_2"]/text()[2]').extract()
         for review in reviews:
-            beerName = 'PracticeBeer'
+            beerID = response.meta['beerID']
             reviewText = review
             
-            item = reviewData(beerName=beerName, reviewText=reviewText)
+            item = reviewData(beerID=beerID, reviewText=reviewText)
             
             yield item
