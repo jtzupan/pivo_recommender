@@ -24,13 +24,18 @@ class ReviewscraperSpider(Spider):
         allowed_domains = ['www.beeradvocate.com/beer/profile/']
         for beerID, url in BAReviewList:
             yield scrapy.Request(url=url, callback=self.parse, meta={'beerID':beerID})
-
+            
     def parse(self, response):
-        reviews = response.xpath('//*[@id="rating_fullview_content_2"]/text()[2]').extract()
-        for review in reviews:
-            beerID = response.meta['beerID']
-            reviewText = review
-            
-            item = reviewData(beerID=beerID, reviewText=reviewText)
-            
-            yield item
+        allText = response.xpath('//*[@id="rating_fullview_content_2"]/text()').extract()
+        allTextJoin = ''.join(allText)
+        for line in allTextJoin.split('\xa0'):
+            if not (line=='' or line=='rDev '):
+                if line.startswith('rDev'):
+                    currentReview = line.replace('rDev ', '').replace('\n','')
+
+                beerID = response.meta['beerID']
+                reviewText = currentReview
+                print(reviewText)
+                item = reviewData(beerID=beerID, reviewText=reviewText)
+                
+                yield item
