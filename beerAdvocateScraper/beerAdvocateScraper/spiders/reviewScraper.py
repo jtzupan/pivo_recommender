@@ -35,7 +35,6 @@ class ReviewscraperSpider(Spider):
 
                 beerID = response.meta['beerID']
                 reviewText = currentReview
-                print(reviewText)
                 item = reviewData(beerID=beerID, reviewText=reviewText)
                 
                 yield item
