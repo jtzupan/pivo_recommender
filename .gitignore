@@ -2,5 +2,5 @@ intermediate/*.txt
 intermediate/ngram_all/*.txt
 .ipynb_checkpoints/
 __pycache__
-.DS_Store
+*.DS_Store
 *.csv

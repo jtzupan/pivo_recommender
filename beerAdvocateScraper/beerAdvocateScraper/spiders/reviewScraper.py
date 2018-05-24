@@ -4,7 +4,7 @@ import sys
 from scrapy import Spider, Item, Field
 import scrapy
 
-scraperPath = os.path.normpath(os.getcwd() + os.sep + os.pardir+ os.sep + os.pardir)
+scraperPath = os.path.normpath(os.getcwd() + os.sep + os.pardir)
 
 sys.path.insert(0, scraperPath)
 

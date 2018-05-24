@@ -35,7 +35,7 @@ def createReviewPageList(listOfBeers):
         # thats fine, the URL will still return a page with no reviews
         # future: check the number of reviews of each beer
         beerID = page.split('/')[-2]
-        for index in range(0,24, 25):
+        for index in range(0,100, 25):
             reviewPageURL = page + '?sort=topr&start=' + str(index)
             beerReviewPageList.append(beerReviewTuple(beerID, reviewPageURL))
     return beerReviewPageList
@@ -43,7 +43,7 @@ def createReviewPageList(listOfBeers):
 
 def scrapyBeerList(startingURL='https://www.beeradvocate.com/lists/top/'):
     topBeersHTML = getHTMLText(startingURL)
-    topBeersList = createBeerList(topBeersHTML)[:1]
+    topBeersList = createBeerList(topBeersHTML)
     allReviewPages = createReviewPageList(topBeersList)
 
     return allReviewPages
