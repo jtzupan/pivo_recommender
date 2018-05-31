@@ -4,13 +4,13 @@ import sys
 from scrapy import Spider, Item, Field
 import scrapy
 
-scraperPath = os.path.normpath(os.getcwd() + os.sep + os.pardir)
+scraperPath = os.path.normpath(os.getcwd()+ os.sep +os.pardir+os.sep+ 'tools')
 
 sys.path.insert(0, scraperPath)
 
 import scraper
 
-BAReviewList = scraper.scrapyBeerList()
+BAReviewList = scraper.scrapyBeerList(topN=3)
 
 class reviewData(Item):
     beerID = Field()

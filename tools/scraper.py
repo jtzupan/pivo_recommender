@@ -15,7 +15,7 @@ def getHTMLText(url):
     return soup
 
 
-def createBeerList(htmlText):
+def createBeerList(htmlText, topN=None):
     listOfBeers = []
     for a in htmlText.find_all('a', href=True):
         j = re.match(r'/beer/profile/\d+/\d+/', a['href'])
@@ -24,10 +24,13 @@ def createBeerList(htmlText):
 
     urlBase = 'https://www.beeradvocate.com'
     beerURLList = [urlBase + i for i in listOfBeers]
-    return beerURLList
+    if topN:
+        return beerURLList[:topN]
+    else:
+        return beerURLList
 
 
-def createReviewPageList(listOfBeers):
+def createReviewPageList(listOfBeers, topN=None):
     beerReviewPageList = []
     beerReviewTuple = namedtuple('beerReviewTuple','beerID, reviewURL')
     for page in listOfBeers:
@@ -41,9 +44,9 @@ def createReviewPageList(listOfBeers):
     return beerReviewPageList
 
 
-def scrapyBeerList(startingURL='https://www.beeradvocate.com/lists/top/'):
+def scrapyBeerList(startingURL='https://www.beeradvocate.com/lists/top/', topN=None):
     topBeersHTML = getHTMLText(startingURL)
-    topBeersList = createBeerList(topBeersHTML)
+    topBeersList = createBeerList(topBeersHTML, topN)
     allReviewPages = createReviewPageList(topBeersList)
 
     return allReviewPages
